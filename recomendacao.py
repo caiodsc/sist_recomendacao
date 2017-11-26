@@ -13,7 +13,12 @@ def euclidiana (usuario1, usuario2):
     c = sqrt(sum((avaliacoes[usuario1].get(d, 0) - avaliacoes[usuario2].get(d, 0)) ** 2 for d in set(avaliacoes[usuario1]) & set(avaliacoes[usuario2])))
     return 1/(1+c)
 
-print(euclidiana('Leonardo', 'Ana'))
+def getSimilares(usuario):
+    similaridade = [(euclidiana(usuario, outro), outro) for outro in avaliacoes if outro != usuario]
+    similaridade.sort()
+    similaridade.reverse()
+    return similaridade
+print(getSimilares('Marcos'))
 
 
 
