@@ -21,6 +21,25 @@ def getSimilares(usuario):
     similaridade.reverse()
     return similaridade
 
+def getRecomendacoes(usuario):
+    totais = {}
+    somaSimilaridade = {}
+    for outro in avaliacoes:
+        if outro == usuario: continue
+        similaridade = euclidiana(usuario, outro)
+        if similaridade <= 0: continue
+        for item in avaliacoes[outro]:
+            #### somente o que o usuário alvo ainda não avaliou
+            if item not in avaliacoes[usuario]:
+                totais.setdefault(item, 0)
+                totais[item] += avaliacoes[outro][item] * similaridade
+                somaSimilaridade.setdefault(item, 0)
+                somaSimilaridade[item] += similaridade
+    rankings = [(total/somaSimilaridade[item], item) for item, total in totais.items()]
+    rankings.sort()
+    rankings.reverse()
+    return rankings
+
 print(getSimilares('Marcos'))
 
 
