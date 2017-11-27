@@ -17,7 +17,7 @@ def getSimilares(base, usuario):
     similaridade = [(euclidiana(base, usuario, outro), outro) for outro in base if outro != usuario]
     similaridade.sort()
     similaridade.reverse()
-    return similaridade
+    return similaridade[0:30]
 
 def getRecomendacoes(base, usuario):
     totais = {}
@@ -36,7 +36,7 @@ def getRecomendacoes(base, usuario):
     rankings = [(total/somaSimilaridade[item], item) for item, total in totais.items()]
     rankings.sort()
     rankings.reverse()
-    return rankings
+    return rankings[0:30]
 
 
 def carregaMovieLens():
@@ -52,8 +52,10 @@ def carregaMovieLens():
         base[usuario][filmes[idfilme]] = float(nota)
     return base
 
-print(getSimilares(avaliacoes, 'Pedro'))
 
+base = carregaMovieLens()
+#print(getSimilares(avaliacoes, 'Pedro'))
+print(getRecomendacoes(base, '1'))
 
 
 
