@@ -40,7 +40,7 @@ def getRecomendacoes(usuario):
     rankings.reverse()
     return rankings
 
-print(getSimilares('Marcos'))
+print(getRecomendacoes('Janaina'))
 
 
 
