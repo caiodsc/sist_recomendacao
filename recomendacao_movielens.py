@@ -1,5 +1,4 @@
 from math import sqrt
-from base_de_dados import avaliacoes
 def euclidiana (base, usuario1, usuario2):
     i = False
     for item in base[usuario1]:
@@ -10,8 +9,7 @@ def euclidiana (base, usuario1, usuario2):
         return 0
     r = sqrt(sum([pow(base[usuario1][item] - base[usuario2][item], 2) for item in base[usuario1] if item in base[usuario2]]))
     return (1/(1+r))
-    #c = sqrt(sum((avaliacoes[usuario1].get(d, 0) - avaliacoes[usuario2].get(d, 0)) ** 2 for d in set(avaliacoes[usuario1]) & set(avaliacoes[usuario2])))
-    #print (1/(1+c))
+
 
 def getSimilares(base, usuario):
     similaridade = [(euclidiana(base, usuario, outro), outro) for outro in base if outro != usuario]
@@ -27,7 +25,6 @@ def getRecomendacoes(base, usuario):
         similaridade = euclidiana(base, usuario, outro)
         if similaridade <= 0: continue
         for item in base[outro]:
-            #### somente o que o usuário alvo ainda não avaliou
             if item not in base[usuario]:
                 totais.setdefault(item, 0)
                 totais[item] += base[outro][item] * similaridade
@@ -44,7 +41,6 @@ def carregaMovieLens():
     for linha in open('./u.item'):
         (id, titulo) = linha.split('|')[0:2]
         filmes[id] = titulo
-    #print(filmes)
     base = {}
     for linha in open('./u.data'):
         (usuario, idfilme, nota, tempo) = linha.split('\t')
@@ -54,7 +50,6 @@ def carregaMovieLens():
 
 
 base = carregaMovieLens()
-#print(getSimilares(avaliacoes, 'Pedro'))
 print(getRecomendacoes(base, '1'))
 
 
